@@ -16,11 +16,11 @@ import {
   isServerRendering
 } from '../util/index'
 
+//返回一个数组，它包含了指定对象所有的可枚举或不可枚举的属性名。push/pop/unshift/shift/sort/reverser/splice
 const arrayKeys = Object.getOwnPropertyNames(arrayMethods)
 
 /**
- * In some cases we may want to disable observation inside a component's
- * update computation.
+ * 在某些情况下，我们可能希望禁用组件内部的观察 更新计算
  */
 export let shouldObserve: boolean = true
 
@@ -28,12 +28,7 @@ export function toggleObserving (value: boolean) {
   shouldObserve = value
 }
 
-/**
- * Observer class that is attached to each observed
- * object. Once attached, the observer converts the target
- * object's property keys into getter/setters that
- * collect dependencies and dispatch updates.
- */
+
 /**
  * 观察者类，会被附加到每个被观察的对象上，value.__ob__ = this
  * 而对象的各个属性则会被转换成 getter/setter，并收集依赖和通知更新
@@ -41,11 +36,11 @@ export function toggleObserving (value: boolean) {
 export class Observer {
   value: any;
   dep: Dep;
-  vmCount: number; // number of vms that have this object as root $data
+  vmCount: number; // number of vms that have this object as root $data  将此对象作为根 $data 的 vm 数量
 
   constructor (value: any) {
     this.value = value
-     // 实例话一个 dep
+    // 实例化一个 dep
     this.dep = new Dep()
     this.vmCount = 0
     // 在 value 对象上设置 __ob__ 属性
@@ -101,12 +96,7 @@ export class Observer {
   }
 }
 
-// helpers
 
-/**
- * Augment a target Object or Array by intercepting
- * the prototype chain using __proto__
- */
 /**
  * 设置 target.__proto__ 的原型对象为 src
  * 比如 数组对象，arr.__proto__ = arrayMethods
@@ -117,10 +107,6 @@ function protoAugment (target, src: Object) {
   /* eslint-enable no-proto */
 }
 
-/**
- * Augment a target Object or Array by defining
- * hidden properties.
- */
 /**
  * 在目标对象上定义指定属性
  * 比如数组：为数组对象定义那七个方法
@@ -133,11 +119,6 @@ function copyAugment (target: Object, src: Object, keys: Array<string>) {
   }
 }
 
-/**
- * Attempt to create an observer instance for a value,
- * returns the new observer if successfully observed,
- * or the existing observer if the value already has one.
- */
 /**
  * 响应式处理的真正入口
  * 为对象创建观察者实例，如果对象已经被观察过，则返回已有的观察者实例，否则创建新的观察者实例
@@ -168,9 +149,7 @@ export function observe (value: any, asRootData: ?boolean): Observer | void {
   return ob
 }
 
-/**
- * Define a reactive property on an Object.
- */
+
 /**
  * 拦截 obj[key] 的读取和设置操作：
  *   1、在第一次读取时收集依赖，比如执行 render 函数生成虚拟 DOM 时会有读取操作
@@ -264,7 +243,9 @@ export function defineReactive (
 /**
  * Set a property on an object. Adds the new property and
  * triggers change notification if the property doesn't
- * already exist.
+ * already exist.设置对象的属性。 添加新属性和
+  * 如果属性没有，则触发更改通知
+  * 已经存在。
  */
 /**
  * 通过 Vue.set 或者 this.$set 方法给 target 的指定 key 设置值 val
@@ -348,10 +329,7 @@ export function del (target: Array<any> | Object, key: any) {
   ob.dep.notify()
 }
 
-/**
- * Collect dependencies on array elements when the array is touched, since
- * we cannot intercept array element access like property getters.
- */
+
 /**
  * 遍历每个数组元素，递归处理数组项为对象的情况，为其添加依赖
  * 因为前面的递归阶段无法为数组中的对象元素添加依赖

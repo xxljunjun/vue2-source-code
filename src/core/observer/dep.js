@@ -7,10 +7,6 @@ import config from '../config'
 let uid = 0
 
 /**
- * A dep is an observable that can have multiple
- * directives subscribing to it.
- */
-/**
  * 一个 dep 对应一个 obj.key
  * 在读取响应式数据时，负责收集依赖，每个 dep（或者说 obj.key）依赖的 watcher 有哪些
  * 在响应式数据更新时，负责通知 dep 中那些 watcher 去执行 update 方法
@@ -50,7 +46,7 @@ export default class Dep {
       // order
       subs.sort((a, b) => a.id - b.id)
     }
-     // 遍历 dep 中存储的 watcher，执行 watcher.update()
+     // 遍历 dep 中存储的 watcher，执行 watcher.update()通知订阅者
     for (let i = 0, l = subs.length; i < l; i++) {
       subs[i].update()
     }

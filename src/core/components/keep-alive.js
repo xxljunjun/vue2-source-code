@@ -50,6 +50,9 @@ function pruneCacheEntry (
 
 const patternTypes: Array<Function> = [String, RegExp, Array]
 
+/**
+ * vue里的内置组件keep-alive
+*/
 export default {
   name: 'keep-alive',
   abstract: true,
